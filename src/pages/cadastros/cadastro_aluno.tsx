@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CadastroAlunoForm from "../../components/cadastros/cadastroAlunoForm";
 import NavBarOrientador from "../../components/orientador/navbar_orientador";
-// import { verificarAutenticacao } from "../../../utils/verificar_autenticaco";
+import { verificarAutenticacao } from "../../utils/verificarAutenticacao";
 
 const BACKEND_URL = import.meta.env.VITE_URL_BACKEND + "upload/alunos";
 
@@ -14,22 +14,22 @@ export default function CadastroAluno() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // async function autenticar() {
-    //   try {
-    //     // const resultado = await verificarAutenticacao();
-    //     if (resultado.autenticado) {
-    //       setAutenticado(true);
-    //     } else {
-    //       setErro(resultado.erro || "Usuário não autenticado.");
-    //       navigate("/", { replace: true });
-    //     }
-    //   } catch (err) {
-    //     console.error("Erro na autenticação:", err);
-    //     setErro("Erro ao verificar autenticação.");
-    //     navigate("/", { replace: true });
-    //   }
-    // }
-    // autenticar();
+    async function autenticar() {
+      try {
+        const resultado = await verificarAutenticacao();
+        if (resultado.autenticado) {
+          setAutenticado(true);
+        } else {
+          setErro(resultado.erro || "Usuário não autenticado.");
+          navigate("/", { replace: true });
+        }
+      } catch (err) {
+        console.error("Erro na autenticação:", err);
+        setErro("Erro ao verificar autenticação.");
+        navigate("/", { replace: true });
+      }
+    }
+    autenticar();
   }, [navigate]);
 
   if (!autenticado && !erro) {
@@ -91,38 +91,6 @@ export default function CadastroAluno() {
 
           <CadastroAlunoForm />
 
-          <div className="mt-6 flex w-full flex-col items-center gap-3">
-            <h2 className="text-lg font-semibold text-gray-800">
-              Upload de Alunos via CSV
-            </h2>
-            <input
-              type="file"
-              accept=".csv"
-              onChange={(e) => setArquivo(e.target.files?.[0] || null)}
-              className="block w-full cursor-pointer rounded-lg border border-gray-300 bg-white p-2 text-sm text-gray-700 file:mr-3 file:cursor-pointer file:rounded-lg file:border-0 file:bg-blue-600 file:px-4 file:py-2 file:text-white hover:file:bg-blue-700"
-            />
-
-            <button
-              onClick={handleUpload}
-              className="rounded-lg bg-green-600 px-6 py-2 font-semibold text-white transition hover:bg-green-700"
-            >
-              Enviar CSV
-            </button>
-
-            {statusUpload && (
-              <p
-                className={`text-sm ${
-                  statusUpload.includes("sucesso")
-                    ? "text-green-600"
-                    : statusUpload.includes("Falha")
-                    ? "text-red-600"
-                    : "text-gray-700"
-                }`}
-              >
-                {statusUpload}
-              </p>
-            )}
-          </div>
         </div>
       </div>
     </div>
