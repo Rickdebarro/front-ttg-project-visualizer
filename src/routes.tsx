@@ -24,9 +24,10 @@ const router = createBrowserRouter([
     path: "/orientador/cadastro/aluno",
     element: <CadastroAluno />,
   },
-    {
+  {
     path: "/orientador/cadastro/projeto",
     element: <CadastroProjeto />,
+  },
   {
     path: "/shared/verProjeto/:id",
     element: <VerProjeto />,
