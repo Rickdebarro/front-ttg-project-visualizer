@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 // Componentes
 import ProjectList from "../../src/components/shared/dashboard_geral_projetos/projectList";
+import NavbarOrientador from "../components/orientador/navbar_orientador";
 
 // Utils
 import { verificarAutenticacao } from "../utils/verificarAutenticacao"; 
@@ -74,23 +75,28 @@ export default function DashboardGeralProjetos() {
 
 
   return (
-    <div className="flex min-h-screen w-full flex-col items-center gap-12 bg-[url('./assets/login-bg.png')] bg-cover bg-center bg-no-repeat">
-      
-      <h1 className="font-rift mb-2 text-center text-5xl font-bold tracking-wide text-green-400 subpixel-antialiased mt-12">
-        PROJETOS
-      </h1>
-      
-      <main className="flex w-full max-w-7xl flex-1 flex-col items-center px-4 pb-12">
-        {carregandoProjetos ? (
-          <div className="w-full rounded-lg bg-[#D9D9D9] p-8 text-center text-gray-600">
-            Carregando lista de projetos...
-          </div>
-        ) : (
-          <div className="min-h-content w-full rounded-lg bg-[#D9D9D9] shadow-lg">
-            <ProjectList projetos={projetos} />
-          </div>
-        )}
-      </main>
+    <div className="relative min-h-screen w-full bg-[url('./assets/login-bg.png')] bg-cover bg-center bg-no-repeat">
+      <div className="fixed top-0 left-0 z-50 w-full">
+        <NavbarOrientador />
+      </div>
+
+      <div className="flex min-h-screen flex-col items-center gap-12 pt-[80px]">
+        <h1 className="font-rift mb-2 text-center text-5xl font-bold tracking-wide text-green-400 subpixel-antialiased mt-12">
+          PROJETOS
+        </h1>
+        
+        <main className="flex w-full max-w-7xl flex-1 flex-col items-center px-4 pb-12">
+          {carregandoProjetos ? (
+            <div className="w-full rounded-lg bg-[#D9D9D9] p-8 text-center text-gray-600">
+              Carregando lista de projetos...
+            </div>
+          ) : (
+            <div className="min-h-content w-full rounded-lg bg-[#D9D9D9] shadow-lg">
+              <ProjectList projetos={projetos} />
+            </div>
+          )}
+        </main>
+      </div>
     </div>
   );
 }
